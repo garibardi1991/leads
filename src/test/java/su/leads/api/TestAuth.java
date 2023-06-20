@@ -33,10 +33,10 @@ public class TestAuth extends TestBaseApi {
                 .filter(new AllureRestAssured())
                 .relaxedHTTPSValidation()
                 .contentType(JSON)
-                .header("type-shop", "rzd")
+                .header("webmaster_models_web_LoginForm[email]", "rzd")
                 .body(body)
                 .log().uri().log().body()
-                .post("https://eshoprzd.ru/rest/auth/api/user/login")
+                .post("http://webmaster.dev-igort.leads/login")
                 .then()
                 .log().body()
                 .extract()
@@ -44,10 +44,10 @@ public class TestAuth extends TestBaseApi {
 
         var token = response.jsonPath().get("result.tokenId").toString();
 
-        open("https://eshoprzd.ru/home");
+        open("http://webmaster.dev-igort.leads/app");
         Selenide.sessionStorage().setItem("key", token);
         Selenide.refresh();
-        $("[title='Общая учетка УТП']").should(appear);
+        $("[title='Аналитическая сводка']").should(appear);
 
     }
 }
