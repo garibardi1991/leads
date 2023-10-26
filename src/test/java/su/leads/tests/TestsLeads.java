@@ -2,16 +2,15 @@ package su.leads.tests;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
+import com.codeborne.selenide.Selenide;
+import org.junit.jupiter.api.*;
 
 
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 public class TestsLeads {
+
 
 
     @BeforeAll
@@ -19,7 +18,8 @@ public class TestsLeads {
         Configuration.browserSize = "1920x1080";
         Configuration.headless = false;
         Configuration.browser = "chrome";
-        }
+        Configuration.holdBrowserOpen = true;
+    }
 
     @Test
     void AuthTest () {
@@ -38,6 +38,5 @@ public class TestsLeads {
         $("[placeholder='Вставьте сюда ссылку']").setValue("https://pxl.leads.su/click/1e5864cf2d28b6006a8213414921b89d?erid=LjN8KP7zQ");
         $(".lds-btn.link-shortener-create-form__form-send-btn").click();
         $(".link-shortener-list-row-left-side__origin-link").shouldHave(visible).shouldHave(Condition.text(expectedText));
-
     }
 }
