@@ -2,7 +2,6 @@ package su.leads.tests;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.*;
 
 
@@ -28,11 +27,6 @@ public class TestsLeads {
         $("[placeholder='пароль']").setValue("Oly05041987!");
         $(".pull-right").click();
 
-//        open("http://webmaster.dev-igort.leads/app/showcase");
-//        $(".lds-btn_border").click();
-//        $("#vs1__combobox").click();
-//        $("[aria-autocomplete='list']").setValue("Тестовая");
-//        $(".lds-radio__text").shouldHave('SEO трафик').click();
         String expectedText = "https://pxl.leads.su/click/1e5864cf2d28b6006a8213414921b89d?erid=LjN8KP7zQ";
         open("https://webmaster.leads.su/app/linkShortener");
         $("[placeholder='Вставьте сюда ссылку']").setValue("https://pxl.leads.su/click/1e5864cf2d28b6006a8213414921b89d?erid=LjN8KP7zQ");
