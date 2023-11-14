@@ -14,14 +14,14 @@ import ru.eshoprzd.helpers.Attach;
 
 public class TestBase {
 
-//    public static void main(String[] args) {
-//
-//        WebDriver driver = new ChromeDriver();
-//
-//        WebDriverRunner.setWebDriver(driver);
-//
-//        Selenide.open("https://webmaster.leads.su/app/linkShortener");
-//    }
+    public static void main(String[] args) {
+
+        WebDriver driver = new ChromeDriver();
+
+        WebDriverRunner.setWebDriver(driver);
+
+        Selenide.open("https://webmaster.leads.su/app/linkShortener");
+    }
 
     @BeforeAll
     static void configure() {
@@ -30,16 +30,16 @@ public class TestBase {
         capabilities.setCapability("enableVideo", true);
         SelenideLogger.addListener("allure", new AllureSelenide());
 
-//        Configuration.baseUrl = "https://eshoprzd.ru/";
-//        Configuration.browserSize = "1920x1080";
-//        Configuration.headless = true;
-        Configuration.browserCapabilities = capabilities;
-        Configuration.browser = Property.browser();
-        Configuration.browserVersion = Property.browserVersion();
-        Configuration.browserSize = Property.browserSize();
-        if (!Property.remoteUrl().equals("")) {
-            Configuration.remote = Property.remoteUrl();
-        }
+
+        Configuration.browserSize = "1920x1080";
+        Configuration.headless = false;
+//        Configuration.browserCapabilities = capabilities;
+//        Configuration.browser = Property.browser();
+//        Configuration.browserVersion = Property.browserVersion();
+//        Configuration.browserSize = Property.browserSize();
+//        if (!Property.remoteUrl().equals("")) {
+//            Configuration.remote = Property.remoteUrl();
+//        }
     }
 
     @AfterEach

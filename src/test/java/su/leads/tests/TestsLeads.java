@@ -1,6 +1,5 @@
 package su.leads.tests;
 
-
 import io.qameta.allure.*;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -15,6 +14,8 @@ import static io.qameta.allure.Allure.step;
 @Tag("testLeads")
 public class TestsLeads extends TestBase {
     PageObjectsLeads pageObjectsLeads= new PageObjectsLeads();
+
+
 
 //    @BeforeAll
 //    static void configure() {
