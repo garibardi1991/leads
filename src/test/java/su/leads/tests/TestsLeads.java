@@ -1,9 +1,7 @@
 package su.leads.tests;
 
 import io.qameta.allure.*;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import su.leads.config.TestBase;
 import su.leads.pages.PageObjectsLeads;
 
@@ -13,10 +11,13 @@ import static io.qameta.allure.Allure.step;
 
 
 @Tag("testLeads")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+
 public class TestsLeads extends TestBase {
     PageObjectsLeads pageObjectsLeads= new PageObjectsLeads();
 
     @Test
+    @Order(1)
     @Feature("Проверка правильной работы сокрощатора")
     @Story("Авторизуемся и сокрощаем корректную ссылку")
     @Owner("trubikhoviv")
@@ -45,6 +46,7 @@ public class TestsLeads extends TestBase {
     }
 
     @Test
+    @Order(2)
     @Feature("Проверка ссылок")
     @Story("Копируем ссылку и проверяем её ли сократили")
     @Owner("trubikhoviv")
@@ -59,6 +61,7 @@ public class TestsLeads extends TestBase {
     }
 
     @Test
+    @Order(3)
     @Feature("Отрицательная проверка ссылок")
     @Story("Проверяем некорректную ссылку")
     @Owner("trubikhoviv")
