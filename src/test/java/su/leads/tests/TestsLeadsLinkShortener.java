@@ -13,7 +13,7 @@ import static io.qameta.allure.Allure.step;
 @Tag("testLeads")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 
-public class TestsLeads extends TestBase {
+public class TestsLeadsLinkShortener extends TestBase {
     PageObjectsLeads pageObjectsLeads= new PageObjectsLeads();
 
     @Test
@@ -54,7 +54,7 @@ public class TestsLeads extends TestBase {
     @Link(value = "Testing", url = "https://webmaster.leads.su/app/linkShortener")
     @DisplayName("Открываем новую вкладку и проверяем ссылку")
     void LinkShorteningTest2 () {
-        step("Копируем сокращенную ссылку и проверяем вывод сообщения что она сокращена", () ->
+        step("Копируем сокращенную ссылку и проверяем вывод сообщения что она скопированна", () ->
                 pageObjectsLeads.copyTheLink());
         step("Вставляем в браузер ссылку и проверяем, что она верна", () ->
                 pageObjectsLeads.checkTheLink());
