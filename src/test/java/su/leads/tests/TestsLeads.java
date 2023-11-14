@@ -17,12 +17,12 @@ public class TestsLeads extends TestBase {
     PageObjectsLeads pageObjectsLeads= new PageObjectsLeads();
 
     @Test
-    @Feature("Проверка сокрощатора ссылок")
-    @Story("Проверяем общую работу сокрощатора")
+    @Feature("Проверка правильной работы сокрощатора")
+    @Story("Авторизуемся и сокрощаем корректную ссылку")
     @Owner("trubikhoviv")
     @Severity(SeverityLevel.BLOCKER)
     @Link(value = "Testing", url = "https://webmaster.leads.su/app/linkShortener")
-    @DisplayName("Общая проверка сокрощатора")
+    @DisplayName("Сократить и проверить ссылку на странице")
     void LinkShorteningTest () {
 
         step("Открываем сайт leads.su", () ->
@@ -33,7 +33,6 @@ public class TestsLeads extends TestBase {
         });
         step("Авторизуемся", () ->
         pageObjectsLeads.loginClick());
-
         step("Открываем сокращатор ссылок", () ->
         pageObjectsLeads.openPageLinkShortener());
         step("Вставляем ссылку в поле сокрощатора", () ->
@@ -43,15 +42,32 @@ public class TestsLeads extends TestBase {
         step("Проверяем верную ли ссылку мы сократили", () ->
         pageObjectsLeads.shouldHaveUrl());
 
+    }
 
-        step("Копируем сокращенную ссылку и проверяем ввод сообщения что она сокращена", () ->
-        pageObjectsLeads.copyTheLink());
-
+    @Test
+    @Feature("Проверка ссылок")
+    @Story("Копируем ссылку и проверяем её ли сократили")
+    @Owner("trubikhoviv")
+    @Severity(SeverityLevel.BLOCKER)
+    @Link(value = "Testing", url = "https://webmaster.leads.su/app/linkShortener")
+    @DisplayName("Открываем новую вкладку и проверяем ссылку")
+    void LinkShorteningTest2 () {
+        step("Копируем сокращенную ссылку и проверяем вывод сообщения что она сокращена", () ->
+                pageObjectsLeads.copyTheLink());
         step("Вставляем в браузер ссылку и проверяем, что она верна", () ->
-        pageObjectsLeads.checkTheLink());
+                pageObjectsLeads.checkTheLink());
+    }
 
+    @Test
+    @Feature("Отрицательная проверка ссылок")
+    @Story("Проверяем некорректную ссылку")
+    @Owner("trubikhoviv")
+    @Severity(SeverityLevel.BLOCKER)
+    @Link(value = "Testing", url = "https://webmaster.leads.su/app/linkShortener")
+    @DisplayName("Открываем сокращатор и сокращаем ссылки без https и неразрешенные")
+    void LinkShorteningTest2 () {
         step("Проверка сокращения ссылки без https", () ->
-        pageObjectsLeads.checkingTheLinkShortening());
+                pageObjectsLeads.checkingTheLinkShortening());
 
         step("Проверка сокращения ссылки нарушая требования Разрешенные ссылки", () ->
                 pageObjectsLeads.checkForShorteningOfBannedLinks());
