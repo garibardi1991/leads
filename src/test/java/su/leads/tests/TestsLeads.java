@@ -65,7 +65,7 @@ public class TestsLeads extends TestBase {
     @Severity(SeverityLevel.BLOCKER)
     @Link(value = "Testing", url = "https://webmaster.leads.su/app/linkShortener")
     @DisplayName("Открываем сокращатор и сокращаем ссылки без https и неразрешенные")
-    void LinkShorteningTest2 () {
+    void LinkShorteningTest3 () {
         step("Проверка сокращения ссылки без https", () ->
                 pageObjectsLeads.checkingTheLinkShortening());
 
