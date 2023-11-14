@@ -15,16 +15,6 @@ import static io.qameta.allure.Allure.step;
 public class TestsLeads extends TestBase {
     PageObjectsLeads pageObjectsLeads= new PageObjectsLeads();
 
-
-
-//    @BeforeAll
-//    static void configure() {
-//        Configuration.browserSize = "1920x1080";
-//        Configuration.headless = false;
-//        Configuration.browser = "chrome";
-//        Configuration.holdBrowserOpen = true;
-//    }
-
     @Test
     @Feature("Проверка сокрощатора ссылок")
     @Story("Проверяем общую работу сокрощатора")
