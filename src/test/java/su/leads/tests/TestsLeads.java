@@ -67,7 +67,7 @@ public class TestsLeads {
         pageObjectsLeads.copyTheLink());
 
 
-        step("Вставляем в барузер ссылку и проверяем, что она верна", () ->
+        step("Вставляем в браузер ссылку и проверяем, что она верна", () ->
         Selenide.switchTo().newWindow(WindowType.TAB));
         Selenide.open(Selenide.clipboard().getText());
         String currentUrl = WebDriverRunner.url();
