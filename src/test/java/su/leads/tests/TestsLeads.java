@@ -1,29 +1,37 @@
 package su.leads.tests;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.WebDriverRunner;
-import org.junit.jupiter.api.*;
-import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.*;
+import org.junit.jupiter.api.Tag;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WindowType;
 import org.openqa.selenium.chrome.ChromeDriver;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.Configuration;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import su.leads.pages.PageObjectsLeads;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
+import static io.qameta.allure.Allure.step;
 
 
+@Tag("testLeads")
 public class TestsLeads {
-        public static void main(String[] args) {
+    PageObjectsLeads pageObjectsLeads= new PageObjectsLeads();
 
-            WebDriver driver = new ChromeDriver();
+    public static void main(String[] args) {
 
+        WebDriver driver = new ChromeDriver();
 
-            WebDriverRunner.setWebDriver(driver);
+        WebDriverRunner.setWebDriver(driver);
 
+        Selenide.open("https://webmaster.leads.su/app/linkShortener");
+    }
 
-            Selenide.open("https://webmaster.leads.su/app/linkShortener");
-        }
 
     @BeforeAll
     static void configure() {
@@ -35,28 +43,49 @@ public class TestsLeads {
 
     @Test
     void LinkShorteningTest () {
-            //Авторизация
-        open("https://webmaster.leads.su/login");
+
+        step("Открываем сайт leads.su", () ->
+        pageObjectsLeads.openPage());
+        step("Вводим логин и пароль", () ->{
         $("[placeholder='ваш email']").setValue("trubikhov.i@leads.su");
         $("[placeholder='пароль']").setValue("Oly05041987!");
-        $(".pull-right").click();
+        });
+        step("Авторизуемся", () ->
+        pageObjectsLeads.loginClick());
 
-        //Корректная проверка работы ссылки
-        String expectedText = "https://pxl.leads.su/click/1e5864cf2d28b6006a8213414921b89d?erid=LjN8KP7zQ";
-        open("https://webmaster.leads.su/app/linkShortener");
-        $("[placeholder='Вставьте сюда ссылку']").setValue("https://pxl.leads.su/click/1e5864cf2d28b6006a8213414921b89d?erid=LjN8KP7zQ");
-        $(".lds-btn.link-shortener-create-form__form-send-btn").click();
-        $(".link-shortener-list-row-left-side__origin-link").shouldHave(visible).shouldHave(Condition.text(expectedText));
+        step("Открываем сокращатор ссылок", () ->
+        pageObjectsLeads.openPageLinkShortener());
+        step("Вставляем ссылку в поле сокрощатора", () ->
+                pageObjectsLeads.insertLinkShortener());
+        step("Нажимаем на кнопку сократить", () ->
+        pageObjectsLeads.clickreduce());
+        step("Проверяем верную ли ссылку мы сократили", () ->
+        pageObjectsLeads.shouldHaveUrl());
 
-        //Проверка копирования сокращенной ссылки
-        $(By.cssSelector(".link-shortener-create-form__form-result-control-symbol")).click();
-        String expectedText2 = " Ссылка скопирована ";
-        $(".notify__text").shouldHave(visible).shouldHave(Condition.text(expectedText2));
 
-        //Проверка некорректной ссылки
+        step("Копируем сокращенную ссылку и проверяем ввод сообщения что она сокращена", () ->
+        pageObjectsLeads.copyTheLink());
+
+
+        step("Вставляем в барузер ссылку и проверяем, что она верна", () ->
+        Selenide.switchTo().newWindow(WindowType.TAB));
+        Selenide.open(Selenide.clipboard().getText());
+        String currentUrl = WebDriverRunner.url();
+        String expectedUrl = "https://pxl.leads.su/click/1e5864cf2d28b6006a8213414921b89d?erid=LjN8KP7zQ";
+        Assertions.assertEquals(expectedUrl, currentUrl, "URL не совпадает");
+        switchTo().window(0);
+
+        //Вставить ссылку без https в поле "Вставьте сюда ссылку" и нажать на кнопку "Сократить"
         $(By.cssSelector(".lds-control__input-symbol")).$$(By.cssSelector(".link-shortener-create-form__form-result-control-symbol")).get(1).click();
-        String expectedText3 = " Невозможно сократить эту ссылку ";
+        String expectedText2 = " Невозможно сократить эту ссылку ";
         $("[placeholder='Вставьте сюда ссылку']").setValue("//pxl.leads.su/click/1e5864cf2d28b6006a8213414921b89d?erid=LjN8KP7zQ");
+        $(".lds-btn.link-shortener-create-form__form-send-btn").click();
+        $(".lds-control__message").shouldHave(visible).shouldHave(Condition.text(expectedText2));
+
+        //Вставить ссылку с https в поле "Вставьте сюда ссылку" нарушая требования "Разрешенные ссылки"
+        $("#input-url").setValue("");
+        String expectedText3 = " Невозможно сократить эту ссылку ";
+        $("[placeholder='Вставьте сюда ссылку']").setValue("https://vk.com/");
         $(".lds-btn.link-shortener-create-form__form-send-btn").click();
         $(".lds-control__message").shouldHave(visible).shouldHave(Condition.text(expectedText3));
 
