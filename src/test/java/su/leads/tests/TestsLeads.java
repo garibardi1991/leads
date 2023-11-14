@@ -1,6 +1,7 @@
 package su.leads.tests;
 
 import io.qameta.allure.*;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import su.leads.config.TestBase;
@@ -21,6 +22,7 @@ public class TestsLeads extends TestBase {
     @Owner("trubikhoviv")
     @Severity(SeverityLevel.BLOCKER)
     @Link(value = "Testing", url = "https://webmaster.leads.su/app/linkShortener")
+    @DisplayName("Общая проверка сокрощатора")
     void LinkShorteningTest () {
 
         step("Открываем сайт leads.su", () ->
