@@ -4,12 +4,10 @@ import com.codeborne.selenide.*;
 import org.junit.jupiter.api.Tag;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WindowType;
 import org.openqa.selenium.chrome.ChromeDriver;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.Configuration;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import su.leads.pages.PageObjectsLeads;
@@ -68,12 +66,7 @@ public class TestsLeads {
 
 
         step("Вставляем в браузер ссылку и проверяем, что она верна", () ->
-        Selenide.switchTo().newWindow(WindowType.TAB));
-        Selenide.open(Selenide.clipboard().getText());
-        String currentUrl = WebDriverRunner.url();
-        String expectedUrl = "https://pxl.leads.su/click/1e5864cf2d28b6006a8213414921b89d?erid=LjN8KP7zQ";
-        Assertions.assertEquals(expectedUrl, currentUrl, "URL не совпадает");
-        switchTo().window(0);
+        pageObjectsLeads.checkTheLink());
 
         //Вставить ссылку без https в поле "Вставьте сюда ссылку" и нажать на кнопку "Сократить"
         $(By.cssSelector(".lds-control__input-symbol")).$$(By.cssSelector(".link-shortener-create-form__form-result-control-symbol")).get(1).click();
