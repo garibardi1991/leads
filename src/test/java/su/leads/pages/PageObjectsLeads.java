@@ -19,7 +19,10 @@ public class PageObjectsLeads {
             click = $(".lds-btn.link-shortener-create-form__form-send-btn"),
             url = $(".link-shortener-list-row-left-side__origin-link"),
             copy = $(By.cssSelector(".link-shortener-create-form__form-result-control-symbol")),
-            checking =  $(".notify__text")
+            checking =  $(".notify__text"),
+            clickonthecross =$(By.cssSelector(".lds-control__input-symbol")),
+            message = $(".lds-control__message"),
+            clearfield = $("#input-url")
                     ;
 
     public PageObjectsLeads openPage() {
@@ -68,5 +71,22 @@ public class PageObjectsLeads {
         switchTo().window(0);
         return this;
     }
+    public PageObjectsLeads checkingTheLinkShortening() {
+        String expectedText2 = " Невозможно сократить эту ссылку ";
+        clickonthecross.$$(By.cssSelector(".link-shortener-create-form__form-result-control-symbol")).get(1).click();
+        insert.setValue("//pxl.leads.su/click/1e5864cf2d28b6006a8213414921b89d?erid=LjN8KP7zQ");
+        click.click();
+        message.shouldHave(visible).shouldHave(Condition.text(expectedText2));
+        return this;
+    }
+    public PageObjectsLeads checkForShorteningOfBannedLinks() {
+        String expectedText3 = " Невозможно сократить эту ссылку ";
+        clearfield.setValue("");
+        insert.setValue("https://vk.com/");
+        click.click();
+        message.shouldHave(visible).shouldHave(Condition.text(expectedText3));
+        return this;
+    }
+
 
 }

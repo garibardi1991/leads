@@ -1,45 +1,35 @@
 package su.leads.tests;
 
-import com.codeborne.selenide.*;
+
+import io.qameta.allure.*;
 import org.junit.jupiter.api.Tag;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.Configuration;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import su.leads.config.TestBase;
 import su.leads.pages.PageObjectsLeads;
 
-import static com.codeborne.selenide.Condition.visible;
+
 import static com.codeborne.selenide.Selenide.*;
 import static io.qameta.allure.Allure.step;
 
 
 @Tag("testLeads")
-public class TestsLeads {
+public class TestsLeads extends TestBase {
     PageObjectsLeads pageObjectsLeads= new PageObjectsLeads();
 
-    public static void main(String[] args) {
-
-        WebDriver driver = new ChromeDriver();
-
-        WebDriverRunner.setWebDriver(driver);
-
-        Selenide.open("https://webmaster.leads.su/app/linkShortener");
-    }
-
-
-    @BeforeAll
-    static void configure() {
-        Configuration.browserSize = "1920x1080";
-        Configuration.headless = false;
-        Configuration.browser = "chrome";
-        Configuration.holdBrowserOpen = true;
-    }
+//    @BeforeAll
+//    static void configure() {
+//        Configuration.browserSize = "1920x1080";
+//        Configuration.headless = false;
+//        Configuration.browser = "chrome";
+//        Configuration.holdBrowserOpen = true;
+//    }
 
     @Test
+    @Feature("Проверка сокрощатора ссылок")
+    @Story("Проверяем общую работу сокрощатора")
+    @Owner("trubikhoviv")
+    @Severity(SeverityLevel.BLOCKER)
+    @Link(value = "Testing", url = "https://webmaster.leads.su/app/linkShortener")
     void LinkShorteningTest () {
 
         step("Открываем сайт leads.su", () ->
@@ -64,23 +54,13 @@ public class TestsLeads {
         step("Копируем сокращенную ссылку и проверяем ввод сообщения что она сокращена", () ->
         pageObjectsLeads.copyTheLink());
 
-
         step("Вставляем в браузер ссылку и проверяем, что она верна", () ->
         pageObjectsLeads.checkTheLink());
 
-        //Вставить ссылку без https в поле "Вставьте сюда ссылку" и нажать на кнопку "Сократить"
-        $(By.cssSelector(".lds-control__input-symbol")).$$(By.cssSelector(".link-shortener-create-form__form-result-control-symbol")).get(1).click();
-        String expectedText2 = " Невозможно сократить эту ссылку ";
-        $("[placeholder='Вставьте сюда ссылку']").setValue("//pxl.leads.su/click/1e5864cf2d28b6006a8213414921b89d?erid=LjN8KP7zQ");
-        $(".lds-btn.link-shortener-create-form__form-send-btn").click();
-        $(".lds-control__message").shouldHave(visible).shouldHave(Condition.text(expectedText2));
+        step("Проверка сокращения ссылки без https", () ->
+        pageObjectsLeads.checkingTheLinkShortening());
 
-        //Вставить ссылку с https в поле "Вставьте сюда ссылку" нарушая требования "Разрешенные ссылки"
-        $("#input-url").setValue("");
-        String expectedText3 = " Невозможно сократить эту ссылку ";
-        $("[placeholder='Вставьте сюда ссылку']").setValue("https://vk.com/");
-        $(".lds-btn.link-shortener-create-form__form-send-btn").click();
-        $(".lds-control__message").shouldHave(visible).shouldHave(Condition.text(expectedText3));
-
+        step("Проверка сокращения ссылки нарушая требования Разрешенные ссылки", () ->
+                pageObjectsLeads.checkForShorteningOfBannedLinks());
     }
 }
