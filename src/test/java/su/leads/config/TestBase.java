@@ -32,7 +32,7 @@ public class TestBase {
 
 
         Configuration.browserSize = "1920x1080";
-        Configuration.headless = true;
+        Configuration.headless = false;
 //        Configuration.browserCapabilities = capabilities;
 //        Configuration.browser = Property.browser();
 //        Configuration.browserVersion = Property.browserVersion();

@@ -6,6 +6,8 @@ import su.leads.config.TestBase;
 import su.leads.pages.PageObjectsLeads;
 
 
+import java.io.File;
+
 import static com.codeborne.selenide.Selenide.*;
 import static io.qameta.allure.Allure.step;
 
@@ -24,13 +26,13 @@ public class TestsLeadsLinkShortener extends TestBase {
     @Severity(SeverityLevel.BLOCKER)
     @Link(value = "Testing", url = "https://webmaster.leads.su/app/linkShortener")
     @DisplayName("Сократить и проверить ссылку на странице")
-    void LinkShorteningTest () {
+    void LinkShorteningTest (String login, String password) {
 
         step("Открываем сайт leads.su", () ->
         pageObjectsLeads.openPage());
         step("Вводим логин и пароль", () ->{
-        $("[placeholder='ваш email']").setValue("trubikhov.i@leads.su");
-        $("[placeholder='пароль']").setValue("Oly05041987!");
+        $("[placeholder='ваш email']").setValue(login);
+        $("[placeholder='пароль']").setValue(password);
         });
         step("Авторизуемся", () ->
         pageObjectsLeads.loginClick());
