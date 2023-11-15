@@ -5,9 +5,6 @@ import org.junit.jupiter.api.*;
 import su.leads.config.TestBase;
 import su.leads.pages.PageObjectsLeads;
 
-
-import java.io.File;
-
 import static com.codeborne.selenide.Selenide.*;
 import static io.qameta.allure.Allure.step;
 
@@ -26,14 +23,16 @@ public class TestsLeadsLinkShortener extends TestBase {
     @Severity(SeverityLevel.BLOCKER)
     @Link(value = "Testing", url = "https://webmaster.leads.su/app/linkShortener")
     @DisplayName("Сократить и проверить ссылку на странице")
-    void LinkShorteningTest (String login, String password) {
+    void LinkShorteningTest () {
 
         step("Открываем сайт leads.su", () ->
         pageObjectsLeads.openPage());
-        step("Вводим логин и пароль", () ->{
-        $("[placeholder='ваш email']").setValue(login);
-        $("[placeholder='пароль']").setValue(password);
-        });
+
+        step("Вводим логин", () ->
+        $("[placeholder='ваш email']").setValue("trubikhov.i@leads.su"));
+        step("Вводим пароль", () ->
+        $("[placeholder='пароль']").setValue("Oly05041987!"));
+
         step("Авторизуемся", () ->
         pageObjectsLeads.loginClick());
         step("Открываем сокращатор ссылок", () ->
@@ -50,7 +49,7 @@ public class TestsLeadsLinkShortener extends TestBase {
     @Test
     @Order(2)
     @Feature("Проверка ссылок")
-    @Story("Копируем ссылку и проверяем её ли сократили")
+    @Story("Копируем ссылку и проверяем её ли, сократили")
     @Owner("trubikhoviv")
     @Severity(SeverityLevel.BLOCKER)
     @Link(value = "Testing", url = "https://webmaster.leads.su/app/linkShortener")

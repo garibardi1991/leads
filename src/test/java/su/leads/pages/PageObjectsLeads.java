@@ -87,6 +87,4 @@ public class PageObjectsLeads {
         message.shouldHave(visible).shouldHave(Condition.text(expectedText3));
         return this;
     }
-
-
 }
